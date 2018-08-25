@@ -1,0 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
+.flexPhone, .flexAttribute {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flexPhone {
+    flex-direction: row;
+}
+
+.flexAttribute {
+    flex-direction: column;
+}
