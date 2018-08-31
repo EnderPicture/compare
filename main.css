@@ -2,15 +2,16 @@
     box-sizing: border-box;
 }
 
-.flexPhone, .flexAttribute {
-    display: flex;
-    flex-wrap: wrap;
+textarea {
+    width: 100%;
+    height: 10rem;
+    resize: vertical;
 }
 
-.flexPhone {
-    flex-direction: row;
+/* #wordsBox {
+    width: 100%;
 }
 
-.flexAttribute {
-    flex-direction: column;
-}
+span {
+    margin-right: 1rem;
+} */
