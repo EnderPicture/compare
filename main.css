@@ -8,10 +8,26 @@ textarea {
     resize: vertical;
 }
 
-/* #wordsBox {
-    width: 100%;
+.wordSelected {
+    color: white;
 }
 
-span {
-    margin-right: 1rem;
-} */
+.wordNotSelected {
+    color: gray;
+}
+
+.typeError {
+    color: red;
+}
+
+.typeCorrect {
+    color: green;
+}
+
+.typeSelected {
+    font-weight: bold;
+}
+
+.typeNotSlected {
+
+}
