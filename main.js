@@ -132,39 +132,25 @@ function idGen(type, wordIndex, letterIndex) {
     }
 }
 
-textBox.addEventListener('textInput', e => {
-    console.log(e.data);
+textBox.addEventListener('input', e => {
+
+    if (e.inputType === 'insertText') {
+
+        if (e.data.lenght === 1) {
+            input(e.data);
+        } else {
+            let charArray = e.data.split('');
+    
+            for (let i = 0; i < e.data.length; i++)
+                input(charArray[i]);
+        }
+
+    } else if (e.inputType === 'deleteContentBackward') {
+        input('Backspace');
+    }
 });
 
-// textBox.addEventListener('keypress', KeyboardEvent => {
-//     let key = KeyboardEvent.key;
-//     console.log(key);
-
-
-
-//     if (key === currentLetterElement.innerHTML && 
-//         currentWrongWordIndex === currentWordIndex && 
-//         currentWrongLetterIndex === currentLetterIndex) {
-        
-        
-
-//         if (key === ' ') {
-//             incrementWord();
-//             incrementLetter(true);
-//         } else {
-
-//             incrementLetter(false);
-//         }
-
-//         incrementWrongLetter(true);
-//     } else { 
-//         incrementWrongLetter(false, false);
-//     }
-
-// });
-
-textBox.addEventListener('keydown', KeyboardEvent => {
-    let key = KeyboardEvent.key;
+function input(key, del ) {
 
     if (key.length === 1) {
         if (key === currentLetterElement.innerHTML && 
@@ -185,16 +171,13 @@ textBox.addEventListener('keydown', KeyboardEvent => {
         } else { 
             incrementWrongLetter(false, false);
         }
-    }
-    
-
-    if (key === 'Backspace') {
+    } else if (key === 'Backspace') {
         if (currentWrongWordIndex > currentWordIndex ||
             currentWrongLetterIndex > currentLetterIndex)
             
             incrementWrongLetter(false, true);
     }
-});
+}
 
 
 
