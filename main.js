@@ -133,11 +133,11 @@ function idGen(type, wordIndex, letterIndex) {
 }
 
 textBox.addEventListener('input', e => {
-    debug.log(e);
+    console.log(e);
 
     if (e.inputType === 'insertText') {
 
-        if (e.data.lenght === 1) {
+        if (e.data.length === 1) {
             input(e.data);
         } else {
             let charArray = e.data.split('');
