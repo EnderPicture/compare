@@ -25,20 +25,27 @@ textarea, input {
 }
 
 #wordsBox {
-    font-size: 2em;
     white-space: pre-wrap;
+    font-size: 1.6em;
+    background-color: #212121;
+    border-style: solid;
+    border-color: #2D2D2D;
+    padding: .5em .3em .5em .5em; 
+    margin: 1em 0 1em 0;
+    border-radius: .25em;
 }
 
 #wordsBox > span {
     display: inline-block;
     border-radius: .25em;
+    margin-right: .2em;
     overflow: hidden;
+    
 }
 
 #wordsBox > span > span {
-    padding-right: .1em;
-    padding-left: .1em;
-    margin:0;
+    display: inline-block;
+    padding: 0 .1em .2em .1em;
 }
 
 .wordSelected {
@@ -46,17 +53,18 @@ textarea, input {
     background-color: #363646;
 }
 
-.typeError {
-    color: #EF6F6C;
-}
-
-.typeCorrect {
-    color: #56E39F;
-}
 .typeSelected {
     background-color: #494A5F;
 }
 
 .wordNotSelected {
     color: gray;
+}
+
+.typeError {
+    background-color: #EF6F6C;
+}
+
+.typeCorrect {
+    color: #56E39F;
 }
