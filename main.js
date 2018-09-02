@@ -132,37 +132,60 @@ function idGen(type, wordIndex, letterIndex) {
     }
 }
 
-
-
-textBox.addEventListener('keypress', KeyboardEvent => {
-    let key = KeyboardEvent.key;
-    console.log(key);
-
-
-
-    if (key === currentLetterElement.innerHTML && 
-        currentWrongWordIndex === currentWordIndex && 
-        currentWrongLetterIndex === currentLetterIndex) {
-        
-        
-
-        if (key === ' ') {
-            incrementWord();
-            incrementLetter(true);
-        } else {
-
-            incrementLetter(false);
-        }
-
-        incrementWrongLetter(true);
-    } else { 
-        incrementWrongLetter(false, false);
-    }
-
+textBox.addEventListener('textInput', e => {
+    console.log(e.data);
 });
+
+// textBox.addEventListener('keypress', KeyboardEvent => {
+//     let key = KeyboardEvent.key;
+//     console.log(key);
+
+
+
+//     if (key === currentLetterElement.innerHTML && 
+//         currentWrongWordIndex === currentWordIndex && 
+//         currentWrongLetterIndex === currentLetterIndex) {
+        
+        
+
+//         if (key === ' ') {
+//             incrementWord();
+//             incrementLetter(true);
+//         } else {
+
+//             incrementLetter(false);
+//         }
+
+//         incrementWrongLetter(true);
+//     } else { 
+//         incrementWrongLetter(false, false);
+//     }
+
+// });
 
 textBox.addEventListener('keydown', KeyboardEvent => {
     let key = KeyboardEvent.key;
+
+    if (key.length === 1) {
+        if (key === currentLetterElement.innerHTML && 
+            currentWrongWordIndex === currentWordIndex && 
+            currentWrongLetterIndex === currentLetterIndex) {
+            
+            
+    
+            if (key === ' ') {
+                incrementWord();
+                incrementLetter(true);
+            } else {
+    
+                incrementLetter(false);
+            }
+    
+            incrementWrongLetter(true);
+        } else { 
+            incrementWrongLetter(false, false);
+        }
+    }
     
 
     if (key === 'Backspace') {
