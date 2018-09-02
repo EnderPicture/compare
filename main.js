@@ -133,6 +133,7 @@ function idGen(type, wordIndex, letterIndex) {
 }
 
 textBox.addEventListener('input', e => {
+    debug.log(e);
 
     if (e.inputType === 'insertText') {
 
