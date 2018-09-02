@@ -149,6 +149,7 @@ textBox.addEventListener('input', e => {
         
         if (e.data === null) {
             input('Backspace');
+            compTextLength = 0;
             return;
         }
         
