@@ -69,6 +69,7 @@ function incrementWord() {
     currentWordIndex++;
     currentWordElement = document.getElementById(idGen(ID_WORD, currentWordIndex));
     currentWordElement.className = wordSelected;
+    compTextLength = 0;
 }
 
 function incrementLetter(reset) {
