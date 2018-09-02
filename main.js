@@ -6,6 +6,7 @@ let words = [];
 let textarea = document.getElementById('textarea');
 let textBox = document.getElementById('type-box')
 let wordsBox = document.getElementById('wordsBox');
+let compTextLength = 0;
 
 let currentWordIndex = -1;
 let currentWordElement;
@@ -36,7 +37,7 @@ function subText() {
         let newWord = document.createElement('span');
         newWord.id = idGen(ID_WORD, i);
         newWord.className = wordNotSelected;
-        
+
         let letters = (words[i] + ' ').split('');
         newWord.setAttribute(wordLength, letters.length);
 
@@ -97,13 +98,13 @@ function incrementWrongLetter(reset, backwards) {
     let letterNotNull = currentWrongLetterElement !== null && currentWrongLetterElement !== undefined;
 
     if (!backwards) {
-        
+
         if (letterNotNull && currentWrongLetterElement.innerHTML === ' ') {
             currentWrongWordIndex++;
             currentWrongWordElement = document.getElementById(idGen(ID_WORD, currentWrongWordIndex));
             currentWrongLetterIndex = -1;
         }
-        
+
         currentWrongLetterElement.classList.add(typeError);
         currentWrongLetterIndex++;
         currentWrongLetterElement = document.getElementById(idGen(ID_LETTER, currentWrongWordIndex, currentWrongLetterIndex));
@@ -118,10 +119,6 @@ function incrementWrongLetter(reset, backwards) {
         currentWrongLetterElement = document.getElementById(idGen(ID_LETTER, currentWrongWordIndex, currentWrongLetterIndex));
         currentWrongLetterElement.classList.remove(typeError);
     }
-
-
-
-    
 }
 
 function idGen(type, wordIndex, letterIndex) {
@@ -133,7 +130,6 @@ function idGen(type, wordIndex, letterIndex) {
 }
 
 textBox.addEventListener('input', e => {
-    console.log(e);
 
     if (e.inputType === 'insertText') {
 
@@ -141,41 +137,57 @@ textBox.addEventListener('input', e => {
             input(e.data);
         } else {
             let charArray = e.data.split('');
-    
+
             for (let i = 0; i < e.data.length; i++)
                 input(charArray[i]);
         }
 
     } else if (e.inputType === 'deleteContentBackward') {
         input('Backspace');
+    } else if (e.inputType === 'insertCompositionText') {
+        
+        if (e.data === null) {
+            input('Backspace');
+            return;
+        }
+        
+        let length = e.data.length;
+
+        if (length === compTextLength + 1) {
+            input(e.data.split('')[length-1]);
+            compTextLength = length;
+        } else if (length === compTextLength - 1) {
+            input('Backspace');
+            compTextLength = length;
+        }
     }
 });
 
-function input(key, del ) {
+function input(key) {
 
     if (key.length === 1) {
-        if (key === currentLetterElement.innerHTML && 
-            currentWrongWordIndex === currentWordIndex && 
+        if (key === currentLetterElement.innerHTML &&
+            currentWrongWordIndex === currentWordIndex &&
             currentWrongLetterIndex === currentLetterIndex) {
-            
-            
-    
+
+
+
             if (key === ' ') {
                 incrementWord();
                 incrementLetter(true);
             } else {
-    
+
                 incrementLetter(false);
             }
-    
+
             incrementWrongLetter(true);
-        } else { 
+        } else {
             incrementWrongLetter(false, false);
         }
     } else if (key === 'Backspace') {
         if (currentWrongWordIndex > currentWordIndex ||
             currentWrongLetterIndex > currentLetterIndex)
-            
+
             incrementWrongLetter(false, true);
     }
 }

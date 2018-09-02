@@ -40,12 +40,12 @@ textarea, input {
     border-radius: .25em;
     margin-right: .2em;
     overflow: hidden;
-    
+    vertical-align:top;
 }
 
 #wordsBox > span > span {
     display: inline-block;
-    padding: 0 .1em .2em .1em;
+    padding: 0 .1em .1em .1em;
 }
 
 .wordSelected {
