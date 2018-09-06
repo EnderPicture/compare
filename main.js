@@ -5,8 +5,8 @@ let text = '';
 let words = [];
 let textarea = document.getElementById('textarea');
 let textBox = document.getElementById('type-box')
+let textBoxValueOld = '';
 let wordsBox = document.getElementById('wordsBox');
-let compTextLength = 0;
 
 let currentWordIndex = -1;
 let currentWordElement;
@@ -69,7 +69,6 @@ function incrementWord() {
     currentWordIndex++;
     currentWordElement = document.getElementById(idGen(ID_WORD, currentWordIndex));
     currentWordElement.className = wordSelected;
-    compTextLength = 0;
 }
 
 function incrementLetter(reset) {
@@ -131,39 +130,31 @@ function idGen(type, wordIndex, letterIndex) {
 }
 
 textBox.addEventListener('input', e => {
+    let textBoxValue = textBox.value;
+    let delta = textBoxValue.length - textBoxValueOld.length;
 
-    if (e.inputType === 'insertText') {
-
-        if (e.data.length === 1) {
-            input(e.data);
-        } else {
-            let charArray = e.data.split('');
-
-            for (let i = 0; i < e.data.length; i++)
-                input(charArray[i]);
+    if (delta > 0) {
+        let newInput = textBoxValue.substring(textBoxValue.length-delta);
+        newInput = newInput.split('');
+        for (let i = 0; i < newInput.length; i++) {
+            input(newInput[i]);
         }
-
-    } else if (e.inputType === 'deleteContentBackward') {
-        input('Backspace');
-    } else if (e.inputType === 'insertCompositionText') {
-        
-        if (e.data === null) {
+    } else if (delta < 0) {
+        for (let i = Math.abs(delta); i > 0; i--) {
+            if (currentWrongWordIndex === currentWordIndex &&
+                currentWrongLetterIndex === currentLetterIndex) {
+                
+                textBox.value = textBoxValueOld;
+                textBoxValue = textBoxValueOld;
+            }
             input('Backspace');
-            compTextLength = 0;
-            return;
-        }
-        
-        let length = e.data.length;
-
-        if (length === compTextLength + 1) {
-            input(e.data.split('')[length-1]);
-            compTextLength = length;
-        } else if (length === compTextLength - 1) {
-            input('Backspace');
-            compTextLength = length;
         }
     }
+
+    textBoxValueOld = textBoxValue;
 });
+
+
 
 function input(key) {
 
