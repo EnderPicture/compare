@@ -26,14 +26,27 @@ let typeNotSelected = 'typeNotSlected';
 
 let wordLength = 'data-word-length';
 
+let range = 100;
+let rangeStart = 0;
+let rangeEnd = 0;
+
+function rangeSet(start) {
+    if (start != null)
+        rangeStart = start;
+
+    rangeEnd = range+rangeStart > words.length ? words.length : range+rangeStart;
+}
 
 function subText() {
     text = textarea.value;
-    words = text.split(new RegExp('\\s+'));
+    text = text.replace(/[^a-zA-z0-9 ,.'";:()]/gm,'');
+    words = text.split(/\s+/gm);
+
+    rangeSet(rangeEnd);
 
     let frag = document.createDocumentFragment();
 
-    for (let i = 0; i < words.length; i++) {
+    for (let i = rangeStart; i < rangeEnd; i++) {
         let newWord = document.createElement('span');
         newWord.id = idGen(ID_WORD, i);
         newWord.className = wordNotSelected;
@@ -53,6 +66,7 @@ function subText() {
         frag.appendChild(newWord);
     }
 
+    
     wordsBox.appendChild(frag);
     start();
 };
@@ -64,9 +78,17 @@ function start() {
 }
 
 function incrementWord() {
+
+    if (currentWordIndex+1 >= rangeEnd) {
+        wordsBox.innerHTML = '';
+        subText();
+        return;
+    }
+
     if (currentWordElement !== null && currentWordElement !== undefined)
         currentWordElement.className = wordNotSelected;
     currentWordIndex++;
+
     currentWordElement = document.getElementById(idGen(ID_WORD, currentWordIndex));
     currentWordElement.className = wordSelected;
 }
@@ -140,12 +162,16 @@ textBox.addEventListener('input', e => {
             input(newInput[i]);
         }
     } else if (delta < 0) {
+
         for (let i = Math.abs(delta); i > 0; i--) {
-            if (currentWrongWordIndex === currentWordIndex &&
-                currentWrongLetterIndex === currentLetterIndex) {
+
+            // if current wrong letter index is the same or smaller than current letter, replace text box with the text before modificatoin
+            if (currentWrongWordIndex <= currentWordIndex &&
+                currentWrongLetterIndex <= currentLetterIndex) {
                 
                 textBox.value = textBoxValueOld;
                 textBoxValue = textBoxValueOld;
+                break;
             }
             input('Backspace');
         }
